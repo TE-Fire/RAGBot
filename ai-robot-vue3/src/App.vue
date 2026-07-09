@@ -1,11 +1,6 @@
 <template>
-  <div>
-    <h1 class="text-3xl font-bold bg-yellow-500">
-      犬小哈实战专栏!
-    </h1>
-    <a-button type="primary">开始学习</a-button>
-
-  </div>
+  <!-- 动态渲染组件 -->
+ <router-view></router-view>
 </template>
 
 <script setup>
