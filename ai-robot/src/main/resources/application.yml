@@ -1,5 +1,5 @@
 server:
-    port: 8080
+  port: 8080
 
 spring:
   ai:
@@ -9,3 +9,7 @@ spring:
       chat:
         model: deepseek-v4-flash # 使用哪个模型
         temperature: 0.8 # 温度值
+
+logging:
+  level:
+    '[org.springframework.ai.chat.client.advisor]': debug

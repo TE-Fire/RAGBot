@@ -20,6 +20,7 @@
         <spring-ai.version>2.0.0</spring-ai.version>
 		<!-- 常用工具类 -->
         <commons-lang3.version>3.18.0</commons-lang3.version>
+		<lombok.version>1.18.30</lombok.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -44,6 +45,13 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>${commons-lang3.version}</version>
+        </dependency>
+
+		 <!-- 避免编写那些冗余的 Java 样板式代码，如 get、set 方法等 -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
         </dependency>
 	</dependencies>
 
