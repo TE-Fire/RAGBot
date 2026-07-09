@@ -2,6 +2,7 @@ package com.tefire.ai_robot.controller;
 
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.memory.ChatMemory;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -36,7 +37,7 @@ public class ChatClientController {
      * @param message
      * @return
      */
-    @GetMapping(value = "/generateStream", produces = "text/html;charset=utf-8")
+    @GetMapping(value = "/generateStream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public Flux<String> generateStream(@RequestParam(value = "message", defaultValue = "你是谁？") String message,
                                         @RequestParam(value = "chatId") String chatId) {
         return chatClient.prompt()
