@@ -20,7 +20,7 @@
               </div>
             </div>
             <!-- 回复的内容 -->
-            <div class="p-1 max-w-[80%] mb-2">
+            <div class="p-1 mb-2 max-w-[90%]">
               <StreamMarkdownRender :content="chat.content" />
             </div>
           </div>
@@ -42,35 +42,36 @@
         </textarea>
 
         <!-- 发送按钮 -->
-        <div class="flex justify-end">
+        <div class="flex justify-end mt-3">
           <button 
           @click="sendMessage"
           :disabled="!message.trim()"
           class="flex items-center justify-center bg-[#4d6bfe] rounded-full w-8 h-8 border border-[#4d6bfe] hover:bg-[#3b5bef] transition-colors
-            disabled:opacity-50
-            disabled:cursor-not-allowed">
+          disabled:opacity-50
+          disabled:cursor-not-allowed
+          ">
             <SvgIcon name="up-arrow" customCss="w-5 h-5 text-white"></SvgIcon>
           </button>
         </div>
       </div>
       <!-- 提示文字 -->
-      <div class="flex items-center justify-center text-xs text-gray-400 mt-2">内容由 AI 生成，请仔细甄别</div>
+      <div class="flex items-center justify-center text-xs text-gray-400 mt-2 mb-2">内容由 AI 生成，请仔细甄别</div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, onBeforeUnmount } from 'vue';
+import { ref, onBeforeUnmount, nextTick } from 'vue';
 import SvgIcon from '@/components/SvgIcon.vue'
 import StreamMarkdownRender from '@/components/StreamMarkdownRender.vue'
 
-// 聊天容器引用
-const chatContainer = ref(null)
 // 输入的消息
 const message = ref('')
 
 // textarea 引用
 const textareaRef = ref(null);
+// 聊天容器引用
+const chatContainer = ref(null)
 
 // 聊天记录 (给个默认的问候语)
 const chatList = ref([
@@ -81,14 +82,17 @@ const chatList = ref([
 const autoResize = () => {
   const textarea = textareaRef.value;
   if (textarea) {
-    textarea.style.height = 'auto';
+    // 重置高度以获取正确的滚动高度
+    textarea.style.height = 'auto'
+    
     // 计算新高度，但最大不超过 300px
+    const newHeight = Math.min(textarea.scrollHeight, 300);
     textarea.style.height = newHeight + 'px';
     
     // 如果内容超出 300px，则启用滚动
     textarea.style.overflowY = textarea.scrollHeight > 300 ? 'auto' : 'hidden';
   }
-};
+}
 
 
 // SSE 连接
@@ -126,10 +130,10 @@ const sendMessage = async () => {
         // 解析 JSON
         let response = JSON.parse(event.data)
         // 持续追加流式回答
-        responseText += event.data;
+        responseText += response.v
         
         // 更新最后一条消息
-        chatList.value[chatList.value.length - 1].content = responseText;
+        chatList.value[chatList.value.length - 1].content = responseText
         // 滚动到底部
         scrollToBottom()
       }
@@ -165,8 +169,8 @@ const scrollToBottom = async () => {
   await nextTick() // 等待 Vue.js 完成 DOM 更新
   if (chatContainer.value) { // 若容器存在
     // 将容器的滚动条位置设置到最底部
-    const container = chatContainer.value
-    container.scrollTop = container.scrollHeight
+    const container = chatContainer.value;
+    container.scrollTop = container.scrollHeight;
   }
 }
 

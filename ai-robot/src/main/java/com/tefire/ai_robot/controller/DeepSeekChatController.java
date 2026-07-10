@@ -38,11 +38,13 @@ public class DeepSeekChatController {
         // 构建提示词
         Prompt prompt = new Prompt(new UserMessage(message));
 
-        // 流式输出
         return deepSeekChatModel.stream(prompt)
                 .mapNotNull(chatResponse -> {
                     Generation generation = chatResponse.getResult();
                     String text = generation.getOutput().getText();
+                    if (text == null || text.isEmpty()) {
+                        return null;
+                    }
                     return AIResponse.builder().v(text).build();
                 });
     }
