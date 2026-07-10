@@ -1,6 +1,7 @@
 package com.tefire.ai_robot.controller;
 
 import org.springframework.ai.chat.messages.UserMessage;
+import org.springframework.ai.chat.model.Generation;
 import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.ai.deepseek.DeepSeekChatModel;
 import org.springframework.http.MediaType;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import jakarta.annotation.Resource;
 import reactor.core.publisher.Flux;
 
+import com.tefire.ai_robot.model.AIResponse;
 /*
  * @Author: TE-Fire 3037749727@qq.com
  * @Date: 2026-07-08 21:52:19
@@ -32,12 +34,16 @@ public class DeepSeekChatController {
     }
 
     @GetMapping(value = "/generateStream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    public Flux<String> generateStream(@RequestParam(value = "message", defaultValue = "你是谁？") String message) {
+    public Flux<AIResponse> generateStream(@RequestParam(value = "message", defaultValue = "你是谁？") String message) {
         // 构建提示词
         Prompt prompt = new Prompt(new UserMessage(message));
 
         // 流式输出
         return deepSeekChatModel.stream(prompt)
-                .mapNotNull(chatResponse -> chatResponse.getResult().getOutput().getText());
+                .mapNotNull(chatResponse -> {
+                    Generation generation = chatResponse.getResult();
+                    String text = generation.getOutput().getText();
+                    return AIResponse.builder().v(text).build();
+                });
     }
 }
