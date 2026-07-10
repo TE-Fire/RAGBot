@@ -30,7 +30,6 @@ public class ChatClientConfig {
     @Bean
     public ChatClient chatClient(DeepSeekChatModel chatModel) {
         return ChatClient.builder(chatModel)
-            .defaultSystem("扮演一名拼多多客服")
             .defaultAdvisors(new SimpleLoggerAdvisor(), // 增添 Spring AI 内置的日志记录功能
                             // new MyLoggerAdvisor()) // 自定义 advisor
                             MessageChatMemoryAdvisor.builder(chatMemory).build() 

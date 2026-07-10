@@ -1,0 +1,98 @@
+2026-07-10T14:34:05.312+08:00 DEBUG 32376 --- [nio-8080-exec-1] o.s.a.c.c.advisor.SimpleLoggerAdvisor    : request: ChatClientRequest[prompt=Prompt{messages=[UserMessage{content='请为演员 周星驰 生成包含5部代表作的电影作品集,
+只包含 周星驰 担任主演的电影，不要包含任何解释说明。
+', metadata={messageType=USER}, messageType=USER}], modelOptions=org.springframework.ai.deepseek.DeepSeekChatOptions@e907ae34}, context={spring.ai.chat.client.output.format=Your response should be in JSON format.
+Do not include any explanations, only provide a RFC8259 compliant JSON response following this format without deviation.
+Do not include markdown code blocks in your response.
+Remove the ```json markdown from the output.
+Here is the JSON Schema instance your output must adhere to:
+```{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "properties" : {
+    "actor" : {
+      "type" : "string"
+    },
+    "movies" : {
+      "type" : "array",
+      "items" : {
+        "type" : "string"
+      }
+    }
+  },
+  "required" : [ "actor", "movies" ],
+  "additionalProperties" : false
+}```
+, chat_memory_conversation_id=1}]
+2026-07-10T14:34:10.472+08:00 DEBUG 32376 --- [nio-8080-exec-1] o.s.a.c.c.advisor.SimpleLoggerAdvisor    : response: {
+  "metadata" : {
+    "empty" : false,
+    "id" : "b94c6522-cb58-4941-986d-024d95d3a338",
+    "model" : "deepseek-v4-flash",
+    "promptMetadata" : [ ],
+    "rateLimit" : {
+      "requestsLimit" : 0,
+      "requestsRemaining" : 0,
+      "requestsReset" : "PT0S",
+      "tokensLimit" : 0,
+      "tokensRemaining" : 0,
+      "tokensReset" : "PT0S"
+    },
+    "usage" : {
+      "promptTokens" : 249,
+      "completionTokens" : 151,
+      "totalTokens" : 400,
+      "nativeUsage" : {
+        "completion_tokens" : 151,
+        "prompt_tokens" : 249,
+        "total_tokens" : 400,
+        "prompt_tokens_details" : {
+          "cached_tokens" : 0
+        }
+      }
+    }
+  },
+  "result" : {
+    "metadata" : {
+      "contentFilters" : [ ],
+      "empty" : true,
+      "finishReason" : "STOP"
+    },
+    "output" : {
+      "media" : [ ],
+      "messageType" : "ASSISTANT",
+      "metadata" : {
+        "finishReason" : "STOP",
+        "index" : 0,
+        "role" : "ASSISTANT",
+        "id" : "b94c6522-cb58-4941-986d-024d95d3a338",
+        "messageType" : "ASSISTANT"
+      },
+      "prefix" : null,
+      "reasoningContent" : "我们要求生成周星驰的5部代表作，只包含他主演的电影，不要解释。输出JSON格式，符合schema: actor是字符串，movies是字符串数组。需要确保是RFC8259 compliant JSON。不要markdown代码块。直接输出JSON。\n\n选择5部周星驰主演的代表作：例如《大话西游》、《喜剧之王》、《少林足球》、《功夫》、《食神》。这些都是他主演的经典作品。确保名字准确。\n\n输出：{\"actor\":\"周星驰\",\"movies\":[\"大话西游\",\"喜剧之王\",\"少林足球\",\"功夫\",\"食神\"]}",
+      "text" : "{\"actor\":\"周星驰\",\"movies\":[\"大话西游\",\"喜剧之王\",\"少林足球\",\"功夫\",\"食神\"]}",
+      "toolCalls" : [ ]
+    }
+  },
+  "results" : [ {
+    "metadata" : {
+      "contentFilters" : [ ],
+      "empty" : true,
+      "finishReason" : "STOP"
+    },
+    "output" : {
+      "media" : [ ],
+      "messageType" : "ASSISTANT",
+      "metadata" : {
+        "finishReason" : "STOP",
+        "index" : 0,
+        "role" : "ASSISTANT",
+        "id" : "b94c6522-cb58-4941-986d-024d95d3a338",
+        "messageType" : "ASSISTANT"
+      },
+      "prefix" : null,
+      "reasoningContent" : "我们要求生成周星驰的5部代表作，只包含他主演的电影，不要解释。输出JSON格式，符合schema: actor是字符串，movies是字符串数组。需要确保是RFC8259 compliant JSON。不要markdown代码块。直接输出JSON。\n\n选择5部周星驰主演的代表作：例如《大话西游》、《喜剧之王》、《少林足球》、《功夫》、《食神》。这些都是他主演的经典作品。确保名字准确。\n\n输出：{\"actor\":\"周星驰\",\"movies\":[\"大话西游\",\"喜剧之王\",\"少林足球\",\"功夫\",\"食神\"]}",
+      "text" : "{\"actor\":\"周星驰\",\"movies\":[\"大话西游\",\"喜剧之王\",\"少林足球\",\"功夫\",\"食神\"]}",
+      "toolCalls" : [ ]
+    }
+  } ]
+}
