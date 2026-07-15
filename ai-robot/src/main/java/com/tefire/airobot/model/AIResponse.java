@@ -1,4 +1,4 @@
-package com.tefire.ai_robot.model;
+package com.tefire.airobot.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

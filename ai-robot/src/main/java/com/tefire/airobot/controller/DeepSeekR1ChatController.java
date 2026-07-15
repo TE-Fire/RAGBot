@@ -1,4 +1,4 @@
-package com.tefire.ai_robot.controller;
+package com.tefire.airobot.controller;
 
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;

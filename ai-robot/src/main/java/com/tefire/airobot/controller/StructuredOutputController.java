@@ -1,4 +1,4 @@
-package com.tefire.ai_robot.controller;
+package com.tefire.airobot.controller;
 
 import java.util.List;
 import java.util.Map;
@@ -16,9 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.tefire.ai_robot.model.ActorFilmography;
-import com.tefire.ai_robot.model.Book;
-
+import com.tefire.airobot.model.ActorFilmography;
+import com.tefire.airobot.model.Book;
 
 import jakarta.annotation.Resource;
 

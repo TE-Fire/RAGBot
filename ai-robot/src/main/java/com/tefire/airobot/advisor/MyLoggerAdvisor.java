@@ -1,4 +1,4 @@
-package com.tefire.ai_robot.advisor;
+package com.tefire.airobot.advisor;
 
 import org.springframework.ai.chat.client.ChatClientRequest;
 import org.springframework.ai.chat.client.ChatClientResponse;

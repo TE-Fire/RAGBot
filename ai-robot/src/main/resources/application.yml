@@ -2,6 +2,10 @@ server:
   port: 8080
 
 spring:
+  cassandra:
+    contactPoints: 127.0.0.1 # Cassandra 集群节点地址（可配置多个，用逗号分隔）
+    port: 9042 # 端口号
+    localDatacenter: datacenter1 # 必须与集群配置的数据中心名称一致（大小写敏感）
   ai:
     deepseek:
       api-key: ${DEEPSEEK_KEY}
@@ -9,6 +13,12 @@ spring:
       chat:
         model: deepseek-v4-flash # 使用哪个模型
         temperature: 0.8 # 温度值
+        memory:
+          cassandra:
+            keyspace: tefire_ai_robot # 指定存储聊天记忆的 Keyspace（类似数据库名）
+            table: t_ai_chat_memory # 表名
+            time-to-live: 1095d # 数据的自动过期时间（1095天 ≈ 3年）
+            initialize-schema: true  # 自动初始化表结构
 
 logging:
   level:

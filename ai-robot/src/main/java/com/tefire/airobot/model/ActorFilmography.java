@@ -1,4 +1,4 @@
-package com.tefire.ai_robot.model;
+package com.tefire.airobot.model;
 
 import java.util.List;
 

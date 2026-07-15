@@ -1,4 +1,4 @@
-package com.tefire.ai_robot.controller;
+package com.tefire.airobot.controller;
 
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.memory.ChatMemory;

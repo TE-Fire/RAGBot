@@ -1,4 +1,9 @@
-package com.tefire.ai_robot.config;
+/*
+ * @Author: TE-Fire 3037749727@qq.com
+ * @Date: 2026-07-09 20:23:53
+ * @Description: 
+ */
+package com.tefire.airobot.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;

@@ -1,4 +1,4 @@
-package com.tefire.ai_robot;
+package com.tefire.airobot;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -1,4 +1,4 @@
-package com.tefire.ai_robot.config;
+package com.tefire.airobot.config;
 
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;

@@ -3,7 +3,7 @@
  * @Date: 2026-07-10 15:53:03
  * @Description: 
  */
-package com.tefire.ai_robot.model;
+package com.tefire.airobot.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

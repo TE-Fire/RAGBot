@@ -1,4 +1,4 @@
-package com.tefire.ai_robot.controller;
+package com.tefire.airobot.controller;
 
 import java.util.List;
 import java.util.Map;
@@ -18,9 +18,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.tefire.airobot.model.AIResponse;
+
 import jakarta.annotation.Resource;
 import reactor.core.publisher.Flux;
-import com.tefire.ai_robot.model.AIResponse;
 
 /*
  * @Author: TE-Fire 3037749727@qq.com
