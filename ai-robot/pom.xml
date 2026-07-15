@@ -54,7 +54,7 @@
             <version>${lombok.version}</version>
         </dependency>
 
-		 <!-- Cassandra -->
+		 <!-- Cassandra
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-cassandra</artifactId>
@@ -63,7 +63,7 @@
         <dependency>
             <groupId>org.springframework.ai</groupId>
             <artifactId>spring-ai-starter-model-chat-memory-repository-cassandra</artifactId>
-        </dependency>
+        </dependency> -->
 	</dependencies>
 
 	<dependencyManagement>

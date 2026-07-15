@@ -1,6 +1,7 @@
 package com.tefire.airobot.config;
 
 import org.springframework.ai.chat.memory.ChatMemory;
+import org.springframework.ai.chat.memory.ChatMemoryRepository;
 import org.springframework.ai.chat.memory.MessageWindowChatMemory;
 import org.springframework.ai.chat.memory.repository.cassandra.CassandraChatMemoryRepository;
 import org.springframework.context.annotation.Bean;
@@ -19,10 +20,10 @@ public class ChatMemoryConfig {
     /**
      * 记忆存储
      */
-    // @Resource
-    // private ChatMemoryRepository chatMemoryRepository;
     @Resource
-    private CassandraChatMemoryRepository chatMemoryRepository;
+    private ChatMemoryRepository chatMemoryRepository;
+    // @Resource
+    // private CassandraChatMemoryRepository chatMemoryRepository;
 
     @Bean
     public ChatMemory chatMemory() {
