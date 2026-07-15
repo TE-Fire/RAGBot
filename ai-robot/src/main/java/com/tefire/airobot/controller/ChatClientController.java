@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.tefire.airobot.tool.DateTimeTools;
+import com.tefire.airobot.tool.WeatherTools;
+
 import jakarta.annotation.Resource;
 import reactor.core.publisher.Flux;
 
@@ -37,10 +40,11 @@ public class ChatClientController {
      * @param message
      * @return
      */
-    @GetMapping(value = "/generateStream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    @GetMapping(value = "/generateStream", produces = "text/html;charset=utf-8")
     public Flux<String> generateStream(@RequestParam(value = "message", defaultValue = "你是谁？") String message,
                                         @RequestParam(value = "chatId") String chatId) {
         return chatClient.prompt()
+                .tools(new DateTimeTools(), new WeatherTools())
                 .user(message) // 提示词
                 .advisors(a -> a.param(ChatMemory.CONVERSATION_ID, chatId)) // 对话 id
                 .stream() // 流式输出
