@@ -1,0 +1,20 @@
+server:
+  port: 8081
+
+spring:
+  ai:
+    mcp:
+      server:
+        protocol: streamable # 使用 Streamable-HTTP 协议
+        type: sync # 处理模式，SYNC 同步或 ASYNC 异步
+        name: mcp-server-qq # MCP Server 名称
+        version: 1.0.0 # MCP Server 版本号
+    deepseek:
+      api-key: ${DEEPSEEK_KEY}
+      base-url: https://api.deepseek.com # DeepSeek 的请求 URL, 可不填，默认值为 api.deepseek.com
+      chat:
+        model: deepseek-v4-flash # 使用哪个模型
+        temperature: 0.8 # 温度值
+
+# 鬼鬼 API Key(替换为你自己的)
+api-key: f7dccd74e646c85316ff3a739c471d96

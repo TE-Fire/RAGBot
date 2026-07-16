@@ -1,0 +1,31 @@
+{
+  "mcpServers": {
+    "qq-mcp-server": {
+      "command": "cmd",
+      "args": [
+        "/c",
+        "mvn",
+        "spring-boot:run",
+        "-pl",
+        "mcp-server-qq"
+      ],
+      "cwd": "D:/RAGBot/ai-robot",
+      "env": {
+        "DEEPSEEK_KEY": "${DEEPSEEK_KEY}",
+        "GUIGUIKEY": "${GUIGUIKEY}"
+      }
+    },
+     "amap-maps": {
+      "command": "cmd",
+      "args": [
+        "/c",
+        "npx",
+        "-y",
+        "@amap/amap-maps-mcp-server"
+      ],
+      "env": {
+        "AMAP_MAPS_API_KEY": "${AMAP_MAPS_API_KEY}"
+      }
+    }
+  }
+}
