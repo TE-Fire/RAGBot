@@ -5,6 +5,7 @@ import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
 import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
 import org.springframework.ai.chat.memory.ChatMemory;
 import org.springframework.ai.deepseek.DeepSeekChatModel;
+import org.springframework.ai.tool.ToolCallbackProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -28,8 +29,9 @@ public class ChatClientConfig {
      * @return
      */
     @Bean
-    public ChatClient chatClient(DeepSeekChatModel chatModel) {
+    public ChatClient chatClient(DeepSeekChatModel chatModel, ToolCallbackProvider tools) {
         return ChatClient.builder(chatModel)
+            .defaultTools(tools) // MCP
             .defaultAdvisors(new SimpleLoggerAdvisor(), // 增添 Spring AI 内置的日志记录功能
                             // new MyLoggerAdvisor()) // 自定义 advisor
                             MessageChatMemoryAdvisor.builder(chatMemory).build() 

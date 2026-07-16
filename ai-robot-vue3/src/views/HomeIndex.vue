@@ -119,7 +119,7 @@ const sendMessage = async () => {
 
   try {
     // 建立 SSE 连接
-    eventSource = new EventSource(`http://localhost:8080/v4/ai/generateStream3?message=${encodeURIComponent(userMessage)}&lang=Java`)    // 响应的回答
+    eventSource = new EventSource(`http://localhost:8080/mcp/ai/generateStream?message=${encodeURIComponent(userMessage)}&chatId=5`)    // 响应的回答
     let responseText = ''
 
     // 处理消息事件

@@ -19,6 +19,12 @@ spring:
             table: t_ai_chat_memory # 表名
             time-to-live: 1095d # 数据的自动过期时间（1095天 ≈ 3年）
             initialize-schema: true  # 自动初始化表结构
+    mcp:
+      client:
+        stdio:
+          servers-configuration: classpath:/mcp-servers-config.json # 指定 MCP 服务的配置文件路径
+        toolcallback:
+          enabled: true # 开启 MCP 客户端的工具回调（Tool Callback）功能
 
 logging:
   level:
