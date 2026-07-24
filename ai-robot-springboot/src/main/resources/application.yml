@@ -2,52 +2,5 @@ server:
   port: 8080 # 项目启动端口
 
 spring:
-  cassandra:
-    contactPoints: 127.0.0.1 # Cassandra 集群节点地址（可配置多个，用逗号分隔）
-    port: 9042 # 端口号
-    localDatacenter: datacenter1 # 必须与集群配置的数据中心名称一致（大小写敏感）
-  ai:
-    deepseek:
-      api-key: sk-8a9c07656135483296e5e10dc4493063 # 填写 DeepSeek Api Key, 改成你自己的
-      base-url: https://api.deepseek.com # DeepSeek 的请求 URL, 可不填，默认值为 api.deepseek.com
-      chat:
-        model: deepseek-v4-flash # 使用哪个模型
-        temperature: 0.8 # 温度值
-    ollama:
-      base-url: http://localhost:11434 # Ollama 服务的访问地址, 11434 端口是 Ollama 默认的启动端口
-      chat:
-        model: qwen3:0.6b # 指定 Ollama 使用的大模型名称，根据你实际安装的来，我运行的是 14b
-        temperature: 0.7 # 温度值
-    openai:
-      base-url: https://llm-al9gjo71owh37s2d.cn-beijing.maas.aliyuncs.com/compatible-mode/v1 # OpenAI 服务的访问地址，这里使用的是阿里云百炼
-      api-key: sk-ws-H.RYIMRMX.Cj6f.MEUCIDIko_t2t_2JTpFF--6Ij5xlNr9Q6bMNkMh3UL0UDTELAiEAmdR8eJitvFiQX65N7hU2vt1cONXPLsunMb-b1n5nc6I  # 填写阿里云百炼的 API Key, 改成你自己的
-      chat:
-        model: qwen3.5-omni-flash # 模型名称
-        temperature: 0.7 # 温度值
-    chat:
-      memory:
-        cassandra:
-          keyspace: xiaoha_ai_robot # 指定存储聊天记忆的 Keyspace（类似数据库名）
-          table: t_ai_chat_memory # 表名
-          time-to-live: 1095d # 数据的自动过期时间（1095天 ≈ 3年）
-          initialize-schema: true  # 自动初始化表结构
-    mcp:
-      client:
-        stdio:
-          servers-configuration: classpath:/mcp-servers-config.json # 指定 MCP 服务的配置文件路径
-        toolcallback:
-          enabled: true # 开启 MCP 客户端的工具回调（Tool Callback）功能
-        type: sync # 客户端使用同步通信模式
-        request-timeout: 100s # 设置单次请求超时时间
-        streamable-http: # Streamable-HTTP 协议
-          connections:
-            qq-mcp-server: # 自定义连接名称（可任意命名）
-              url: http://localhost:8000 # MCP 服务实际地址
-
-
-
-
-
-logging:
-  level:
-    org.springframework.ai.chat.client.advisor: debug
+  profiles:
+    active: dev # 激活 dev 开发环境
