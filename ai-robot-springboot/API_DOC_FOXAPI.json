@@ -1,0 +1,46 @@
+{
+    "name": "AI Robot Springboot",
+    "version": "1.0.0",
+    "description": "AI 机器人服务接口文档",
+    "baseUrl": "http://localhost:8080",
+    "items": [
+        {
+            "name": "新建对话",
+            "path": "/new",
+            "method": "POST",
+            "description": "新建一个 AI 对话，发送用户消息并获取响应",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json",
+                    "required": true
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n    \"message\": \"你好，帮我查询一下天气\"\n}",
+                "json": {
+                    "message": {
+                        "type": "string",
+                        "required": true,
+                        "description": "用户消息内容",
+                        "example": "你好，帮我查询一下天气"
+                    }
+                }
+            },
+            "responses": [
+                {
+                    "status": 200,
+                    "description": "成功响应",
+                    "body": "{\n    \"success\": true,\n    \"message\": null,\n    \"errorCode\": null,\n    \"data\": {\n        \"summary\": \"用户询问天气情况\",\n        \"uuid\": \"550e8400-e29b-41d4-a716-446655440000\"\n    }\n}"
+                },
+                {
+                    "status": 400,
+                    "description": "参数错误",
+                    "body": "{\n    \"success\": false,\n    \"message\": \"用户消息不能为空\",\n    \"errorCode\": null,\n    \"data\": null\n}"
+                }
+            ]
+        }
+    ]
+}
