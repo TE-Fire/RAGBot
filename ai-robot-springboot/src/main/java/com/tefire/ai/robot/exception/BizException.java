@@ -10,7 +10,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class BizException {
+public class BizException extends RuntimeException{
     // 异常码
     private String errorCode;
     // 错误信息
