@@ -1,4 +1,4 @@
-package com.tefire.ai.robot.model;
+package com.tefire.ai.robot.model.vo.chat;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
