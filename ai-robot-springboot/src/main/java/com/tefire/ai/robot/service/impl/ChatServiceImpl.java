@@ -3,6 +3,8 @@ package com.tefire.ai.robot.service.impl;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+import org.springframework.stereotype.Service;
+
 import com.tefire.ai.robot.domain.dos.ChatDO;
 import com.tefire.ai.robot.domain.mapper.ChatMapper;
 import com.tefire.ai.robot.model.vo.chat.NewChatReqVO;
@@ -13,6 +15,7 @@ import com.tefire.ai.robot.utils.StringUtil;
 
 import jakarta.annotation.Resource;
 
+@Service
 public class ChatServiceImpl implements ChatService {
     
     @Resource
