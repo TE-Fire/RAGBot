@@ -105,6 +105,12 @@
             <artifactId>p6spy</artifactId>
             <version>${p6spy.version}</version>
         </dependency>
+
+        <!-- AOP 切面 (Spring Boot 4.x 使用 aspectj) -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aspectj</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

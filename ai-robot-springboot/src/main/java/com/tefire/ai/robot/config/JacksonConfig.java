@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.tefire.ai.robot.constants.DateConstants;
-
+import com.tefire.ai.robot.utils.JsonUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -24,12 +24,6 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.YearMonthSerializer;
 
-/**
- * @author: 火小哈
- * @date: 2024/4/15 13:50
- * @version: v1.0.0
- * @description: 自动配置自定义的 Jackson
- */
 @Configuration
 public class JacksonConfig {
 
@@ -63,6 +57,8 @@ public class JacksonConfig {
 
         objectMapper.registerModule(javaTimeModule);
 
+        JsonUtil.init(objectMapper);
+        
         return objectMapper;
     }
 }
