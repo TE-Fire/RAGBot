@@ -1,0 +1,20 @@
+server:
+  port: 8080 # 项目启动端口
+
+spring:
+  profiles:
+    active: dev # 激活 dev 开发环境
+  servlet:
+    multipart:
+      max-file-size: 10MB # 单个文件大小限制
+      max-request-size: 10MB # 总请求大小限制
+
+logging:
+  config: classpath:log4j2.xml # 设置日志配置文件路径
+
+# RAG 检索优化配置
+rag:
+  splitter: # 文档切分
+    enabled: true # 是否启用 Token 切分（关闭后，文档块保持按问答切分的原始形态）
+    chunk-size: 800 # 每个文档块的目标大小（单位: Token）
+    min-chunk-size-chars: 350 # 块内按标点截断时，允许的最小块字符数
