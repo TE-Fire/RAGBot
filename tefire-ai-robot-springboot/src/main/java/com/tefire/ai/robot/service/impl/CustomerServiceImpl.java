@@ -19,6 +19,7 @@ import com.tefire.ai.robot.service.EsChunkService;
 import com.tefire.ai.robot.service.HybridRetrievalService;
 import com.tefire.ai.robot.utils.PageResponse;
 import com.tefire.ai.robot.utils.Response;
+import jakarta.annotation.PostConstruct;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
@@ -33,6 +34,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -72,6 +74,18 @@ public class CustomerServiceImpl implements CustomerService {
     private EsChunkService esChunkService;
     @Resource
     private RagProperties ragProperties;
+
+    /**
+     * 配置里的存储路径是相对路径时，必须先转成绝对路径。
+     * 原因：MultipartFile.transferTo(File) 对相对路径的基准是 multipart 临时目录，
+     * 不是进程工作目录，不转换会报 FileNotFoundException。
+     */
+    @PostConstruct
+    void normalizeStoragePaths() {
+        this.fileStoragePath = Paths.get(fileStoragePath).toAbsolutePath().normalize().toString();
+        this.chunkPath = Paths.get(chunkPath).toAbsolutePath().normalize().toString();
+        log.info("## 文件存储目录: {}, 分片目录: {}", fileStoragePath, chunkPath);
+    }
 
 
 
