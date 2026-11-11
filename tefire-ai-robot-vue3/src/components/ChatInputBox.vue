@@ -27,7 +27,7 @@
                 <!-- 下拉框菜单 -->
                 <div v-if="isModelDropdownOpen" 
                 ref="dropdownRef"
-                :class="['absolute', 'left-0', 'w-48', 'bg-white', 'rounded-lg', 'shadow-lg', 'border', 'border-gray-200', 'z-10', 'overflow-hidden', dropdownPosition]"
+                :class="['absolute', 'left-0', 'w-56', 'bg-white', 'rounded-lg', 'shadow-lg', 'border', 'border-gray-200', 'z-10', 'overflow-hidden', dropdownPosition]"
                 >
                     <div v-for="model in models" :key="model.id" 
                     class="px-3 py-2 hover:bg-gray-100 cursor-pointer flex items-center justify-between"
