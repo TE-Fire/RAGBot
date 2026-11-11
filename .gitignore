@@ -4,6 +4,12 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
+# WorkBuddy 本地会话数据
+.workbuddy/
+
+# 运行时产物：上传的知识库文件与分片
+data/
+
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
