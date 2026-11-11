@@ -44,7 +44,8 @@ services:
         soft: -1
         hard: -1
     ports:
-      - "9200:9200"
+      # 宿主机端口可用 ES_PORT 覆盖（如本机 9200 已被占用）
+      - "${ES_PORT:-9200}:9200"
     volumes:
       - esdata:/usr/share/elasticsearch/data
 

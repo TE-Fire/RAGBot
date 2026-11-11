@@ -61,7 +61,14 @@ docker compose up -d
 
 三个容器：`tefire-pg`(5432)、`tefire-es`(9200)、`tefire-searxng`(8888)。首次启动会自动执行 `ai_robot.sql` 建表建扩展。
 
-ES 镜像需要现场安装 IK 分词插件，构建时会联网。若插件下载失败，可把 `application-dev.yml` 里的 `rag.elasticsearch.index-analyzer` / `search-analyzer` 改成 `standard`，功能仍可用，只是中文关键词召回会变差。
+ES 镜像需要现场安装 IK 分词插件，构建时会联网（约 1.2GB 基础镜像）。若插件下载失败，可把 `application-dev.yml` 里的 `rag.elasticsearch.index-analyzer` / `search-analyzer` 改成 `standard`，功能仍可用，只是中文关键词召回会变差。
+
+**端口冲突**：本机 9200 被其他程序占用时，用环境变量换端口，并同步告诉应用：
+
+```bash
+ES_PORT=9201 docker compose up -d elasticsearch
+# 启动后端时：ES_URIS=http://localhost:9201
+```
 
 ### 2. 配置模型密钥
 

@@ -33,7 +33,7 @@ spring:
         max-document-batch-size: 10000 # 每批处理的最大文档数
         table-name: t_vector_store # 向量表名称
   elasticsearch:
-    uris: http://localhost:9200 # ES 服务地址
+    uris: ${ES_URIS:http://localhost:9200} # ES 服务地址（端口被占用时用 ES_URIS 覆盖）
     connection-timeout: 5s # 建立连接超时
     socket-timeout: 30s # 读写超时（默认 30s）
 
@@ -48,6 +48,7 @@ okhttp: # OkHttp 客户端配置
 searxng: # SearXNG 搜索引擎配置
   url: http://localhost:8888/search # SearXNG 服务的 API 端点地址
   count: 10 # 每次从搜索结果中，提取的最大数量
+  engines: 360search # 指定聚合引擎（逗号分隔）；留空用默认引擎集，默认集在部分网络下不可达
 
 customer-service:
   file-storage-path: data/files # 问答文件存储路径（相对启动目录）
