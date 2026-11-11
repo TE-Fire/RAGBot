@@ -1,0 +1,9 @@
+server:
+  port: 8080 # 项目启动端口
+
+spring:
+  ai:
+    openai:
+      # 生产环境同样通过环境变量注入，密钥不落库
+      base-url: ${AI_BASE_URL:https://dashscope.aliyuncs.com/compatible-mode/v1}
+      api-key: ${AI_API_KEY:}
