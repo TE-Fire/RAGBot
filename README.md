@@ -80,7 +80,19 @@ $env:AI_API_KEY = "sk-你的密钥"
 $env:AI_BASE_URL = "https://your-endpoint/v1"
 ```
 
-变量名与默认值见 `application-dev.yml`：`AI_API_KEY`（必填）、`AI_BASE_URL`、`AI_CHAT_MODEL`、`AI_RERANK_URL`。embedding 模型固定为 `text-embedding-v4`（1536 维，与 pgvector 表结构对应）。
+变量名与默认值见 `application-dev.yml`：
+
+| 变量 | 默认值 | 说明 |
+| --- | --- | --- |
+| `AI_API_KEY` | 空（必填） | 模型服务密钥 |
+| `AI_BASE_URL` | 百炼 compatible-mode | OpenAI 兼容地址 |
+| `AI_CHAT_MODEL` | `deepseek-v4.1-flash` | 客服链路模型 |
+| `AI_EMBEDDING_MODEL` | `text-embedding-v4` | 向量化模型 |
+| `AI_EMBEDDING_DIMENSIONS` | `1536` | 必须与 `t_vector_store.embedding` 列一致 |
+| `AI_RERANK_MODEL` / `AI_RERANK_URL` | `qwen3-rerank` / 百炼 rerank 接口 | 精排 |
+| `ES_URIS` | `http://localhost:9200` | ES 地址，端口改过时同步 |
+
+换 embedding 模型时注意维度：`dimensions` 会随请求发出，服务端不支持裁剪时返回的维度必须与表结构匹配，否则要改 `ai_robot.sql` 里的 `vector(N)` 并重建表。
 
 ### 3. 启动后端
 

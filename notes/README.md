@@ -18,11 +18,11 @@
 
 跑通之后按这条线验证一遍，笔记里的每个结论都能自己复现：
 
-1. 上传 `知识库文档/tefire实战专栏客服FAQ.md`，看状态从"待处理"走到"已完成"，查 `t_vector_store` 有多少块、`rag_chunk` 索引有多少条——验证离线链路与双写。
-2. 跑 `ExactTermRetrievalTests`，把 topK 开到 20 找目标块的名次——验证"向量召回排太后"这个现象。
-3. 跑 `HybridRetrievalVerifyTests`，对比每路候选 5 条与 10 条的融合结果——验证 RRF 的共识效应。
+1. 上传 `知识库文档/tefire实战专栏客服FAQ.md`，看状态从"待处理"走到"已完成"，查 `t_vector_store` 有多少块、`rag_chunk` 索引有多少条——验证离线链路与双写（参考值：7361 字节的示例 FAQ 切成 20 块，两边都是 20）。
+2. 跑 `ExactTermRetrievalTests`，把 topK 开到 20 找目标块的名次——先确认单路召回够不够用（示例数据上目标块排第 1，distance≈0.31）。
+3. 跑 `HybridRetrievalVerifyTests`，对比每路候选 5 条与 10 条的融合结果——验证 RRF 的共识效应（观察点：`来源=[V1+E1]` 这类双路命中的块得分为单路的约两倍）。
 4. 跑 `RerankVerifyTests`，对比 RRF 顺序与 rerank 顺序——验证精排的作用。
-5. 把 `rag.retrieval.hybrid-enabled` 和 `rag.rerank.enabled` 都关掉，重跑第 2 步，对比三种配置下的名次——这是"优化前后对照实验"的最小闭环。
+5. 把 `rag.splitter.enabled` 关掉、用一篇多主题的长文档重灌，再跑第 2 步，对比目标块名次——这是"切分修根因"的最小复现实验。
 
 ## 一条判断主线
 
