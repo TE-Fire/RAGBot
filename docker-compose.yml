@@ -1,0 +1,65 @@
+# 本地依赖编排：PostgreSQL(pgvector) + Elasticsearch(含 IK 分词) + SearXNG
+# 用法：docker compose up -d
+# 说明：应用本身仍在本机运行（mvn spring-boot:run），这里只起中间件
+
+name: tefire-ai-robot
+
+services:
+  # 关系库 + 向量库：业务表与 t_vector_store 都在这一个实例里
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: tefire-pg
+    environment:
+      POSTGRES_DB: robot
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      TZ: Asia/Shanghai
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      # 首次启动自动执行建表脚本（库为空时才执行）
+      - ./tefire-ai-robot-springboot/src/main/resources/sql/ai_robot.sql:/docker-entrypoint-initdb.d/01_init.sql:ro
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres -d robot" ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  # 关键词召回路：需要 IK 分词插件，故用 Dockerfile 现装
+  elasticsearch:
+    build:
+      context: ./docker/es
+      args:
+        ES_VERSION: ${ES_VERSION:-9.4.2}
+    container_name: tefire-es
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - xpack.security.http.ssl.enabled=false
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+      - TZ=Asia/Shanghai
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    ports:
+      - "9200:9200"
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+
+  # 联网搜索：聚合搜索引擎，应用按 JSON 格式调用
+  searxng:
+    image: searxng/searxng:latest
+    container_name: tefire-searxng
+    ports:
+      - "8888:8080"
+    volumes:
+      - ./docker/searxng/settings.yml:/etc/searxng/settings.yml:ro
+    environment:
+      - SEARXNG_BASE_URL=http://localhost:8888/
+    restart: unless-stopped
+
+volumes:
+  pgdata:
+  esdata:
