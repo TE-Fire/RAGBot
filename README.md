@@ -72,24 +72,34 @@ ES_PORT=9201 docker compose up -d elasticsearch
 
 ### 2. 配置模型密钥
 
-密钥不入库，用环境变量注入：
+密钥不入库。最省事的方式是放在项目根目录的 `.env.local`（已被 `.gitignore` 覆盖，不会提交）：
+
+```
+AI_API_KEY=sk-你的密钥
+ES_URIS=http://localhost:9201   # ES 映射端口不是 9200 时必填
+```
+
+启动前把它读进环境变量（PowerShell）：
 
 ```powershell
-$env:AI_API_KEY = "sk-你的密钥"
-# 若使用非百炼的 OpenAI 兼容服务，再加：
-$env:AI_BASE_URL = "https://your-endpoint/v1"
+Get-Content .env.local | Where-Object { $_ -match '^\s*[^#].*=.*' } | ForEach-Object {
+  $p = $_ -split '=', 2
+  Set-Item -Path ("env:" + $p[0].Trim()) -Value $p[1].Trim()
+}
 ```
+
+也可以直接在终端里 `$env:AI_API_KEY = "sk-你的密钥"`，效果相同。
 
 变量名与默认值见 `application-dev.yml`：
 
 | 变量 | 默认值 | 说明 |
 | --- | --- | --- |
 | `AI_API_KEY` | 空（必填） | 模型服务密钥 |
-| `AI_BASE_URL` | 百炼 compatible-mode | OpenAI 兼容地址 |
-| `AI_CHAT_MODEL` | `deepseek-v4.1-flash` | 客服链路模型 |
-| `AI_EMBEDDING_MODEL` | `text-embedding-v4` | 向量化模型 |
+| `AI_BASE_URL` | `cn-beijing.maas.qianwenaiapi.com/compatible-mode/v1` | OpenAI 兼容地址 |
+| `AI_CHAT_MODEL` | `qwen3.8-flash` | 客服链路模型 |
+| `AI_EMBEDDING_MODEL` | `qwen3.7-text-embedding` | 向量化模型 |
 | `AI_EMBEDDING_DIMENSIONS` | `1536` | 必须与 `t_vector_store.embedding` 列一致 |
-| `AI_RERANK_MODEL` / `AI_RERANK_URL` | `qwen3-rerank` / 百炼 rerank 接口 | 精排 |
+| `AI_RERANK_MODEL` / `AI_RERANK_URL` | `qwen3.7-text-rerank` / 同端点的 rerank 路径 | 精排 |
 | `ES_URIS` | `http://localhost:9200` | ES 地址，端口改过时同步 |
 
 换 embedding 模型时注意维度：`dimensions` 会随请求发出，服务端不支持裁剪时返回的维度必须与表结构匹配，否则要改 `ai_robot.sql` 里的 `vector(N)` 并重建表。
@@ -97,7 +107,7 @@ $env:AI_BASE_URL = "https://your-endpoint/v1"
 两个和模型名相关的坑，换服务商时必查：
 
 - **前端模型下拉框是硬编码的**，在 `tefire-ai-robot-vue3/src/stores/chatStore.js` 的 `models` 数组里。名字必须与 `GET {AI_BASE_URL}/models` 返回的 ID 完全一致，否则后端会收到 404 `Model not exist`。
-- **后端默认值面向官方百炼**（`text-embedding-v4`），自建或专属实例的模型 ID 往往不同（例如 `qwen3.7-text-embedding`），用 `AI_*_MODEL` 覆盖前先查一次 `/models`。
+- **后端默认值对应上面的 qianwenaiapi 端点**，换服务商时模型 ID 往往不同（同一套模型在官方百炼的 ID 可能是 `text-embedding-v4`、`qwen3-rerank`），先用 `GET {AI_BASE_URL}/models` 查一遍，再用 `AI_*_MODEL` 覆盖。
 - 流式链路出错时后端会把错误作为一帧 `data:{"v":"[出错了] ..."}` 下发，避免连接静默断开导致前端一直 loading。
 
 ### 3. 启动后端

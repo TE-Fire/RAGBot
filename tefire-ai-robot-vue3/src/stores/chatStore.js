@@ -6,8 +6,8 @@ export const useChatStore = defineStore('chat', () => {
 
   // 定义模型列表（名称必须与所接入服务商的实际模型 ID 一致，否则接口返回 404 Model not exist）
   const models = ref([
-    { id: 1, name: 'deepseek-v4.1-flash', icon: 'deepseek-logo', description: '更流畅', selected: true },
-    { id: 2, name: 'deepseek-v4-pro', icon: 'deepseek-logo', description: '深度思考', selected: false },
+    { id: 1, name: 'qwen3.8-flash', icon: 'deepseek-logo', description: '更流畅', selected: true },
+    { id: 2, name: 'qwen3.8-max', icon: 'deepseek-logo', description: '深度思考', selected: false },
   ])
 
   // 选中的模型，默认为第一个

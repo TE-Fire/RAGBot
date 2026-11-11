@@ -19,11 +19,11 @@ spring:
   ai:
     openai:
       # 兼容 OpenAI 协议的模型服务地址，默认走阿里云百炼（可用环境变量 AI_BASE_URL 指向其他兼容服务）
-      base-url: ${AI_BASE_URL:https://dashscope.aliyuncs.com/compatible-mode/v1}
+      base-url: ${AI_BASE_URL:https://cn-beijing.maas.qianwenaiapi.com/compatible-mode/v1}
       # 模型服务 API Key，通过环境变量注入，不写进代码库
       api-key: ${AI_API_KEY:}
       embedding:
-        model: ${AI_EMBEDDING_MODEL:text-embedding-v4} # 向量化模型
+        model: ${AI_EMBEDDING_MODEL:qwen3.7-text-embedding} # 向量化模型
         dimensions: ${AI_EMBEDDING_DIMENSIONS:1536} # 维度，必须与向量表一致
     vectorstore:
       pgvector:
@@ -53,7 +53,7 @@ searxng: # SearXNG 搜索引擎配置
 customer-service:
   file-storage-path: data/files # 问答文件存储路径（相对启动目录）
   chunk-path: data/files/chunk # 分片文件存储路径
-  model: ${AI_CHAT_MODEL:deepseek-v4.1-flash} # 客服链路使用的模型名称
+  model: ${AI_CHAT_MODEL:qwen3.8-flash} # 客服链路使用的模型名称
   temperature: 0.0 # 温度值
 
 rag:
@@ -71,7 +71,7 @@ rag:
     rrf-k: 60 # RRF 融合常数，默认 60
   rerank: # 重排序策略
     enabled: true # 是否启用 Rerank 重排（关闭则保持 RRF 融合顺序，不做精排）
-    model: ${AI_RERANK_MODEL:qwen3-rerank} # 重排序模型
-    api-url: ${AI_RERANK_URL:https://dashscope.aliyuncs.com/api/v1/services/rerank/text-rerank/text-rerank} # API 地址
+    model: ${AI_RERANK_MODEL:qwen3.7-text-rerank} # 重排序模型
+    api-url: ${AI_RERANK_URL:https://cn-beijing.maas.qianwenaiapi.com/api/v1/services/rerank/text-rerank/text-rerank} # API 地址
     api-key: ${spring.ai.openai.api-key} # API Key
     top-n: 3 # 重排序后，最终喂给大模型的文档块数量
