@@ -138,6 +138,15 @@ public class ChatController {
 
                     // 推理内容无新增（正式回答阶段），下发正式回答
                     return AIResponse.builder().v(text).build();
+                })
+                .onErrorResume(e -> {
+                    // 流式响应头已提交，此时无法再走统一异常处理，只能把错误当作一帧数据下发，
+                    // 否则连接静默断开，前端只会一直停在 loading 状态
+                    log.error("## 对话流异常", e);
+                    String msg = String.valueOf(e.getMessage()).contains("Model not exist")
+                            ? "当前模型不可用，请切换到可用的模型"
+                            : "服务暂时不可用，请稍后重试";
+                    return Flux.just(AIResponse.builder().v("\n\n[出错了] " + msg).build());
                 });
 
     }

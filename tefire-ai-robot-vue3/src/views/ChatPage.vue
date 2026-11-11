@@ -205,7 +205,7 @@ const sendMessage = async (payload) => {
     const controller = new AbortController()
     const signal = controller.signal
 
-    fetchEventSource('http://localhost:8080/chat/completion', {
+    fetchEventSource('/api/chat/completion', {
       method: 'POST',
       signal: signal,
       headers: {
@@ -242,7 +242,11 @@ const sendMessage = async (payload) => {
         }
       },
       onerror(err) {
-        throw err;    // 必须 throw 才能停止 
+        // 流式链路出错时若不复位 loading，界面会永远转圈（此前 modelName 不存在就卡在这里）
+        lastMessage.loading = false
+        lastMessage.content = '抱歉，请求出错了：' + (err?.message || '未知错误')
+        scrollToBottom()
+        throw err    // 必须 throw 才能停止重试
       }
     })
   } catch (error) {

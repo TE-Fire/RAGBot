@@ -94,6 +94,12 @@ $env:AI_BASE_URL = "https://your-endpoint/v1"
 
 换 embedding 模型时注意维度：`dimensions` 会随请求发出，服务端不支持裁剪时返回的维度必须与表结构匹配，否则要改 `ai_robot.sql` 里的 `vector(N)` 并重建表。
 
+两个和模型名相关的坑，换服务商时必查：
+
+- **前端模型下拉框是硬编码的**，在 `tefire-ai-robot-vue3/src/stores/chatStore.js` 的 `models` 数组里。名字必须与 `GET {AI_BASE_URL}/models` 返回的 ID 完全一致，否则后端会收到 404 `Model not exist`。
+- **后端默认值面向官方百炼**（`text-embedding-v4`），自建或专属实例的模型 ID 往往不同（例如 `qwen3.7-text-embedding`），用 `AI_*_MODEL` 覆盖前先查一次 `/models`。
+- 流式链路出错时后端会把错误作为一帧 `data:{"v":"[出错了] ..."}` 下发，避免连接静默断开导致前端一直 loading。
+
 ### 3. 启动后端
 
 ```powershell

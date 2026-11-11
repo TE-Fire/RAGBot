@@ -148,7 +148,13 @@ public class AiCustomerServiceController {
         return chatClientRequestSpec
                 .stream()
                 .content()
-                .map(text -> AIResponse.builder().v(text).build()); // 构建返参 AIResponse
+                .map(text -> AIResponse.builder().v(text).build()) // 构建返参 AIResponse
+                .onErrorResume(e -> {
+                    // 响应头已提交，异常只能作为一帧数据下发，否则前端会一直停在 loading
+                    log.error("## 客服对话流异常", e);
+                    return Flux.just(AIResponse.builder()
+                            .v("\n\n[出错了] 服务暂时不可用，请稍后重试").build());
+                });
     }
 
 }
